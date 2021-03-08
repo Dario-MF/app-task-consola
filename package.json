@@ -1,0 +1,15 @@
+{
+  "name": "02-app-tasks-consola",
+  "version": "0.0.1",
+  "description": "aplicacion gestora de tareas en consola.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dario MF",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "inquirer": "^8.0.0"
+  }
+}
