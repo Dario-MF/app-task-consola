@@ -5,7 +5,7 @@ const preguntas = [
     {
         type: 'list',
         name: 'opcion',
-        message: '¿Que desea hacer?',
+        message: '¿Que desea hacer?\n',
         choices: [
             {
                 value: '1',
@@ -50,7 +50,7 @@ const pausado = [
 
 const inquirerMenu = async () => {
     console.clear();
-    console.log('==============================='.cyan);
+    console.log('\n==============================='.cyan);
     console.log(`${'----'.blue} ${'Seleciona una opción'.white} ${'----'.blue}`);
     console.log('===============================\n'.cyan);
 
@@ -88,7 +88,7 @@ const inquirerTareasBorrar = async( tareas = []) => {
             name: `${idx} ${tarea.desc}`
         }
     });
-    const choices2 = new Rx.subject
+    
     const lista = [
         {
             type: 'list',
