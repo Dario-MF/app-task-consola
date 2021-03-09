@@ -45,7 +45,7 @@ const pausado = [
         name: 'pausa',
         message: `Presione ${'ENTER'.cyan} para continuar.`
     }
-]
+];
 
 
 const inquirerMenu = async () => {
@@ -56,11 +56,11 @@ const inquirerMenu = async () => {
 
     const { opcion } = await inquirer.prompt(preguntas);
     return opcion;
-}
+};
 
 const inquirerPausa = async () => {
     await inquirer.prompt(pausado);
-}
+};
 
 const leerInput = async(message) => {
     const question = [
@@ -79,7 +79,8 @@ const leerInput = async(message) => {
     ];
     const {desc} = await inquirer.prompt(question);
     return desc;
-}
+};
+
 const inquirerTareasBorrar = async( tareas = []) => {
     const choices = tareas.map((tarea, i) => {
         const idx = `${i + 1}.`.blue;
@@ -87,8 +88,7 @@ const inquirerTareasBorrar = async( tareas = []) => {
             value: tarea.id,
             name: `${idx} ${tarea.desc}`
         }
-    });
-    
+    });  
     const lista = [
         {
             type: 'list',
@@ -97,7 +97,6 @@ const inquirerTareasBorrar = async( tareas = []) => {
             choices
         }
     ];
-
     choices.push({
             value: '0',
             name: '0.'.blue + ' Cancelar'
@@ -105,7 +104,7 @@ const inquirerTareasBorrar = async( tareas = []) => {
 
     const { id } = await inquirer.prompt(lista);
     return id;
-}
+};
 
 const inquirerTareas = async(tareas = []) => {
     const choices = tareas.map(tarea => {
@@ -113,8 +112,7 @@ const inquirerTareas = async(tareas = []) => {
             value: tarea.id,
             name: tarea.desc
         }
-    });
-    
+    });   
     const lista = [
         {
             type: 'list',
@@ -125,7 +123,7 @@ const inquirerTareas = async(tareas = []) => {
     ];
     const { id } = await inquirer.prompt(lista);
     return id;
-}
+};
 
 const confirmar = async( message ) => {
     const question = [
@@ -137,7 +135,7 @@ const confirmar = async( message ) => {
     ];
     const { ok } = await inquirer.prompt(question);
     return ok;
-}
+};
 
 const inquirerTareasCheckList = async( tareas = []) => {
     const choices = tareas.map((tarea, i) => {
@@ -160,7 +158,11 @@ const inquirerTareasCheckList = async( tareas = []) => {
 
     const { ids } = await inquirer.prompt(lista);
     return ids;
-}
+};
+
+
+
+
 
 module.exports = {
     inquirerMenu,

@@ -1,4 +1,5 @@
 const { guardarDB, leerDB } = require('./helpers/guardarArchivo');
+const Tareas = require('./models/tareas');
 const { 
     inquirerMenu, 
     inquirerPausa,
@@ -8,18 +9,19 @@ const {
     confirmar,
     inquirerTareasCheckList
 } = require('./helpers/inquirer');
-const Tareas = require('./models/tareas');
+
 require('colors');
 
 
 
 const main = async () => {
     let opt = '';
-    const tareas = new Tareas()
-    const tareasDB = leerDB()
+    const tareas = new Tareas();
+    const tareasDB = leerDB();
+    // Cargar DB
     if(tareasDB){
         tareas.cargarTareasFromArray(tareasDB);
-    }
+    };
 
     do {
         opt = await inquirerMenu()
@@ -31,15 +33,15 @@ const main = async () => {
                 break;
             // Listado tareas completo
             case '2':
-                await inquirerTareas(tareas.listadoCompleto())        
+                await inquirerTareas(tareas.listadoCompleto());      
                 break;
             // Listado tareas completadas.
             case '3':
-                await inquirerTareas(tareas.listadoCompletadasOrPendientes(true))
+                await inquirerTareas(tareas.listadoCompletadasOrPendientes(true));
                 break;
             // Listado tareas pendientes.
             case '4':
-                await inquirerTareas(tareas.listadoCompletadasOrPendientes(false))
+                await inquirerTareas(tareas.listadoCompletadasOrPendientes(false));
                 break;
             // Completar tareas.
             case '5':
@@ -49,14 +51,12 @@ const main = async () => {
             // Borrar tareas
             case '6':
                 const id = await inquirerTareasBorrar(tareas.listadoArr);
-
                 if(id !== '0'){
                     const confirmDelete = await confirmar('¿Esta seguro de borrar la tarea?');
                     if(confirmDelete){
                         tareas.borrarTarea(id);
-                    }
-                }
-
+                    };
+                };
                 break;
             default:
                 break;
@@ -64,9 +64,8 @@ const main = async () => {
         // Guardado en DB JSON.
         guardarDB(tareas.listadoArr);
 
-        pause = await inquirerPausa()
-    } while (opt !== '0')
+        pause = await inquirerPausa();
+    } while (opt !== '0');
+};
 
-}
-
-main()
+main();
