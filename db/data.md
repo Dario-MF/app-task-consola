@@ -1,0 +1,1 @@
+# Directorio para almacenar la data de la app en local.

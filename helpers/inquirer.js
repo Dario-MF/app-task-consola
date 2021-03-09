@@ -80,30 +80,94 @@ const leerInput = async(message) => {
     const {desc} = await inquirer.prompt(question);
     return desc;
 }
-
-const inquirerTareas = async(tareas = []) => {
+const inquirerTareasBorrar = async( tareas = []) => {
+    const choices = tareas.map((tarea, i) => {
+        const idx = `${i + 1}.`.blue;
+        return {
+            value: tarea.id,
+            name: `${idx} ${tarea.desc}`
+        }
+    });
+    const choices2 = new Rx.subject
     const lista = [
         {
             type: 'list',
-            name: 'tareas',
-            message: 'Listado de tareas',
-            choices:[]
+            name: 'id',
+            message: 'Borrar Tarea',
+            choices
         }
     ];
 
-    tareas.forEach(tarea => {
-        lista[0].choices.push({
+    choices.push({
+            value: '0',
+            name: '0.'.blue + ' Cancelar'
+        });
+
+    const { id } = await inquirer.prompt(lista);
+    return id;
+}
+
+const inquirerTareas = async(tareas = []) => {
+    const choices = tareas.map(tarea => {
+        return {
             value: tarea.id,
             name: tarea.desc
-        })
+        }
+    });
+    
+    const lista = [
+        {
+            type: 'list',
+            name: 'id',
+            message: 'Listado de tareas',
+            choices: (choices.length) ? choices : [{value:'', name:'Lista de tareas vacia.'.blue}]
+        }
+    ];
+    const { id } = await inquirer.prompt(lista);
+    return id;
+}
+
+const confirmar = async( message ) => {
+    const question = [
+        {
+            type: 'confirm',
+            name: 'ok',
+            message,
+        }
+    ];
+    const { ok } = await inquirer.prompt(question);
+    return ok;
+}
+
+const inquirerTareasCheckList = async( tareas = []) => {
+    const choices = tareas.map((tarea, i) => {
+        const idx = `${i + 1}.`.blue;
+        return {
+            value: tarea.id,
+            name: `${idx} ${tarea.desc}`,
+            checked: (tarea.completadoEn) ? true : false
+        }
     });
 
-    const { opcion } = await inquirer.prompt(lista);
+    const lista = [
+        {
+            type: 'checkbox',
+            name: 'ids',
+            message: 'Selecciones',
+            choices
+        }
+    ];
+
+    const { ids } = await inquirer.prompt(lista);
+    return ids;
 }
 
 module.exports = {
     inquirerMenu,
     inquirerPausa,
     leerInput,
-    inquirerTareas
+    inquirerTareas,
+    inquirerTareasBorrar,
+    confirmar,
+    inquirerTareasCheckList
 }

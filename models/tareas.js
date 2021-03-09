@@ -1,5 +1,6 @@
+const dayjs = require("dayjs");
 const Tarea = require("./tarea");
-require('colors')
+require('colors');
 
 
 
@@ -15,6 +16,13 @@ class Tareas {
     
     constructor(){
         this._listado = {};
+    }
+
+    borrarTarea(id){
+        if( this._listado){
+            console.log(`Tarea "${this._listado[id].desc}" Eliminada`.red);
+            delete this._listado[id];    
+        }
     }
 
     cargarTareasFromArray ( tareas = []) {
@@ -58,7 +66,7 @@ class Tareas {
                 listadoFormat.push(
                     {
                         id: tarea.id,
-                        desc:`${(contador + '.').blue} ${tarea.desc} => ${completa}`,
+                        desc:`${(contador + '.').blue} ${tarea.desc} => ${completa} el: ${(tarea.completadoEn).green}`,
                         completadoEn: tarea.completadoEn
                     }
                 )
@@ -76,6 +84,22 @@ class Tareas {
         })
         return listadoFormat;
     }
+
+    completarTarea(ids = []){
+        ids.forEach(id => {
+            const tarea = this._listado[id];
+            if( !tarea.completadoEn ){
+                tarea.completadoEn = dayjs().format('DD/MM/YYYY HH:mm:ss');
+            }
+        })
+        this.listadoArr.forEach(tarea => {
+            if(!ids.includes(tarea.id)){
+                this._listado[tarea.id].completadoEn = null;
+            }
+        })
+        
+    }
+
 }
 
 module.exports= Tareas;
